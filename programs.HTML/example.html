@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Austine Kace | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #22223b;
+      --accent: #4a4e69;
+      --bg: #f2e9e4;
+      --white: #fff;
+      --gray: #9a8c98;
+      --transition: 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--primary);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--white);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 500;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+      position: absolute;
+      left: 0; bottom: -4px;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+    }
+    .nav-links a:hover::after, .nav-links a.active::after {
+      width: 100%;
+    }
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+    /* Hero */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4rem 0 2rem 0;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .hero-text {
+      flex: 1 1 300px;
+    }
+    .hero-text h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      animation: fadeInDown 1s;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: var(--gray);
+      animation: fadeInUp 1.2s;
+    }
+    .hero-text .btn {
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      box-shadow: 0 2px 8px rgba(74,78,105,0.08);
+      animation: fadeIn 1.5s;
+    }
+    .hero-text .btn:hover {
+      background: var(--primary);
+      transform: translateY(-3px) scale(1.03);
+    }
+    .hero-img {
+      flex: 0 0 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1.5s;
+    }
+    .hero-img img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid var(--accent);
+      box-shadow: 0 4px 24px rgba(74,78,105,0.10);
+    }
+    /* About */
+    .about {
+      background: var(--white);
+      border-radius: 16px;
+      margin: 2rem 0;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+    .about-bio {
+      flex: 2 1 250px;
+    }
+    .about-bio h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    .about-bio p {
+      color: var(--gray);
+      margin-bottom: 1.2rem;
+    }
+    .skills {
+      flex: 1 1 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .skill {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 500;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      transition: background var(--transition), color var(--transition);
+    }
+    .skill:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+    /* Portfolio */
+    .portfolio {
+      margin: 2rem 0;
+    }
+    .portfolio h2 {
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .project {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .project:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(74,78,105,0.10);
+    }
+    .project img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      transition: filter var(--transition);
+    }
+    .project:hover img {
+      filter: brightness(0.92) blur(1px);
+    }
+    .project-content {
+      padding: 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .project-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .project-desc {
+      color: var(--gray);
+      font-size: 0.98rem;
+      margin-bottom: 1rem;
+    }
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition);
+      align-self: flex-start;
+    }
+    .project-link:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    /* Contact */
+    .contact {
+      background: var(--white);
+      border-radius: 16px;
+      margin: 2rem 0;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .contact-form {
+      flex: 2 1 250px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-form input, .contact-form textarea {
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: var(--bg);
+      transition: border var(--transition);
+      resize: none;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border: 1.5px solid var(--accent);
+      outline: none;
+    }
+    .contact-form button {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 25px;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      align-self: flex-start;
+    }
+    .contact-form button:hover {
+      background: var(--primary);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .social {
+      flex: 1 1 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .social a {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition);
+      font-size: 1.1rem;
+    }
+    .social a:hover {
+      color: var(--accent);
+    }
+    .social svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--accent);
+      transition: fill var(--transition);
+    }
+    .social a:hover svg {
+      fill: var(--primary);
+    }
+    /* Footer */
+    footer {
+      background: var(--accent);
+      color: var(--white);
+      text-align: center;
+      padding: 1.2rem 0;
+      font-size: 1rem;
+      margin-top: 2rem;
+    }
+    footer a {
+      color: var(--bg);
+      text-decoration: underline;
+      margin: 0 0.5rem;
+      transition: color var(--transition);
+    }
+    footer a:hover {
+      color: var(--white);
+    }
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero, .about, .contact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      .hero-img {
+        align-self: center;
+      }
+    }
+    @media (max-width: 700px) {
+      .container { width: 98%; }
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        width: 180px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+        gap: 1.2rem;
+        padding: 1.5rem 0;
+        display: none;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    @media (max-width: 500px) {
+      .hero-text h1 { font-size: 1.5rem; }
+      .about-bio h2, .portfolio h2 { font-size: 1.3rem; }
+      .about, .contact { padding: 1.2rem 0.5rem; }
+      .project img { height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Austine Kace</div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="hero">
+      <div class="hero-text">
+        <h1>Hello, I'm Austine Kace</h1>
+        <p>I'm a passionate web developer specializing in building modern, responsive websites and web applications. Let's create something amazing together!</p>
+        <a href="#portfolio" class="btn">View Portfolio</a>
+      </div>
+      <div class="hero-img">
+        <img src="WhatsApp Image 2025-07-07 at 14.16.08_b56fb197.jpg" alt="Profile Picture">
+      </div>
+    </section>
+
+    <section class="about container" id="about">
+      <div class="about-bio">
+        <h2>About Me</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+        <p>With a keen eye for design and a love for coding, I strive to deliver seamless digital experiences.</p>
+      </div>
+      <div class="skills">
+        <div class="skill">HTML5</div>
+        <div class="skill">CSS3</div>
+        <div class="skill">JavaScript</div>
+        <div class="skill">React</div>
+        <div class="skill">Node.js</div>
+      </div>
+    </section>
+
+    <section class="portfolio container" id="portfolio">
+      <h2>Portfolio</h2>
+      <div class="projects">
+        <div class="project">
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Project 1">
+          <div class="project-content">
+            <div>
+              <div class="project-title">Project One</div>
+              <div class="project-desc">A modern landing page built with React and styled-components. Responsive and accessible.</div>
+            </div>
+            <a href="#" class="project-link" target="_blank">View Project</a>
+          </div>
+        </div>
+        <div class="project">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Project 2">
+          <div class="project-content">
+            <div>
+              <div class="project-title">Project Two</div>
+              <div class="project-desc">A portfolio website template featuring smooth animations and a clean, minimal design.</div>
+            </div>
+            <a href="#" class="project-link" target="_blank">View Project</a>
+          </div>
+        </div>
+        <div class="project">
+          <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Project 3">
+          <div class="project-content">
+            <div>
+              <div class="project-title">Project Three</div>
+              <div class="project-desc">A RESTful API backend for a todo app, built with Node.js and Express.</div>
+            </div>
+            <a href="#" class="project-link" target="_blank">View Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact container" id="contact">
+      <form class="contact-form" autocomplete="off">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <div class="social">
+        <a href="#" target="_blank" title="Twitter">
+          <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.47.69a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04A4.28 4.28 0 0 0 16.11 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.7c-.37.63-.58 1.36-.58 2.14 0 1.48.75 2.78 1.89 3.54a4.28 4.28 0 0 1-1.94-.54v.05c0 2.07 1.47 3.8 3.42 4.19-.36.1-.74.16-1.13.16-.28 0-.54-.03-.8-.08.54 1.69 2.11 2.92 3.97 2.95A8.6 8.6 0 0 1 2 19.54a12.13 12.13 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.37-.01-.56A8.7 8.7 0 0 0 24 4.59a8.5 8.5 0 0 1-2.54.7z"/></svg>
+          Twitter
+        </a>
+        <a href="#" target="_blank" title="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.75 1.37-1.54 2.82-1.54 3.01 0 3.57 1.98 3.57 4.56v5.62z"/></svg>
+          LinkedIn
+        </a>
+        <a href="#" target="_blank" title="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.39-3.87-1.39-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2v3.26c0 .31.21.67.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Jane Doe. All rights reserved.
+    <a href="#hero">Home</a>|
+    <a href="#about">About</a>|
+    <a href="#portfolio">Portfolio</a>|
+    <a href="#contact">Contact</a>
+  </footer>
+
+  <script>
+    // Smooth scrolling for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: 'smooth'
+          });
+          // Set active class
+          document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    hamburger.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') navLinks.classList.toggle('open');
+    });
+
+    // Close nav on link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Contact form (demo only)
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your message!');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
